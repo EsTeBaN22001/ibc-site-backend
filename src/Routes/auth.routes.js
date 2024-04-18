@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { loginController, registerController } from '../Controllers/auth.controller.js'
-import { sanitizeRegisterUser } from '../Middlewares/sanitizeInputs.js'
+import { loginController } from '../Controllers/auth.controller.js'
+import { sanitizeLoginUser } from '../Middlewares/sanitizeInputs.js'
 import { validateInputs } from '../Middlewares/validateInput.js'
 
 const router = Router()
 
-router.post('/login', sanitizeRegisterUser, validateInputs, loginController)
+router.post('/login', sanitizeLoginUser, validateInputs, loginController)
 
 export default router

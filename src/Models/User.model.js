@@ -24,4 +24,18 @@ export class UserModel {
       return { success: false, err }
     }
   }
+
+  static async userExistsByUsername(username) {
+    try {
+      const [result] = await pool.query(`SELECT * FROM ${this.table} WHERE username = ?`, [username])
+
+      if (result.length > 0) {
+        return result[0]
+      }
+
+      return false
+    } catch (error) {
+      return { success: false, error }
+    }
+  }
 }
