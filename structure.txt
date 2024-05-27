@@ -1,2 +1,13 @@
 username: "ibcsl"
 password: "ibcSL1234.!"
+
+EVENTS STRUCTURE
+-id
+-fecha (ngx-bootstrap range DatePicker)
+  -fecha-inicio
+  -fecha-fin
+-hora-inicio
+-hora-fin(opcional)
+-ubicación
+-precio(opcional)
+-info adicional(opcional)

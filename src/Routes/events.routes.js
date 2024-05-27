@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { eventsController } from '../Controllers/events.controller.js'
+import { getEventsController } from '../Controllers/events.controller.js'
+import { verifyToken } from '../Middlewares/jwt.js'
 
 const router = Router()
 
-router.get('/events', eventsController)
+router.get('/events', verifyToken, getEventsController)
 
 export default router
