@@ -52,4 +52,18 @@ export class EventsModel {
       return { success: false, err }
     }
   }
+
+  static async deleteEvent(id) {
+    try {
+      const [result] = await pool.query(`DELETE FROM ${this.table} WHERE id = ${id} LIMIT 1`)
+
+      if (!result || result.affectedRows <= 0) {
+        return false
+      }
+
+      return result
+    } catch (err) {
+      return { success: false, err }
+    }
+  }
 }

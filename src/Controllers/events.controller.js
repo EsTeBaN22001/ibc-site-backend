@@ -37,8 +37,21 @@ export const updateEventController = async (req, res) => {
 
   if (!result || result.affectedRows <= 0) {
     res.status(400)
-    res.send('Error creating event')
+    res.send('Error updating event')
   }
 
   res.send(event)
+}
+
+export const deleteEventController = async (req, res) => {
+  const eventId = req.params.id
+
+  const result = await EventsModel.deleteEvent(eventId)
+
+  if (!result || result.affectedRows <= 0) {
+    res.status(400)
+    res.send('Error deleting event')
+  }
+
+  res.send({ success: true, message: 'Event deleted successfully' })
 }
