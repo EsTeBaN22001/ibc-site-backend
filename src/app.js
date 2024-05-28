@@ -11,5 +11,5 @@ app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors())
 
-app.use('/api', eventsRouter)
+app.use('/api/events', eventsRouter)
 app.use('/api/auth', authRouter)
