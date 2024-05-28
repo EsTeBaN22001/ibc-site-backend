@@ -15,33 +15,30 @@ export const getEventsController = async (req, res) => {
 }
 
 export const createEventController = async (req, res) => {
-  const { title, date_start, date_end, time_start, time_end, ubication, price, aditional_info } = req.body
+  const event = req.body
 
-  const result = await EventsModel.createEvent({
-    title,
-    date_start,
-    date_end,
-    time_start,
-    time_end,
-    ubication,
-    price,
-    aditional_info
-  })
+  const result = await EventsModel.createEvent(event)
 
   if (!result) {
     res.status(400)
     res.send('Error creating event')
   }
 
-  res.send({
-    id: result.insertId,
-    title,
-    date_start,
-    date_end,
-    time_start,
-    time_end,
-    ubication,
-    price,
-    aditional_info
-  })
+  event.id = result.insertId
+
+  res.send(event)
+}
+
+export const updateEventController = async (req, res) => {
+  const event = req.body
+  event.id = req.params.id
+
+  const result = await EventsModel.updateEvent(event)
+
+  if (!result || result.affectedRows <= 0) {
+    res.status(400)
+    res.send('Error creating event')
+  }
+
+  res.send(event)
 }
