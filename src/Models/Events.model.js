@@ -17,11 +17,25 @@ export class EventsModel {
     }
   }
 
+  static async getEvent(id) {
+    try {
+      const [result, data] = await pool.query(`SELECT * FROM ${this.table} WHERE id = ${id}`)
+
+      if (!result) {
+        return false
+      }
+
+      return result[0]
+    } catch (err) {
+      return { success: false, err }
+    }
+  }
+
   static async createEvent({ title, date_start, date_end, time_start, time_end, ubication, price, aditional_info }) {
     try {
       const [result] = await pool.query(
         `INSERT INTO ${this.table} (title, date_start, date_end, time_start, time_end, ubication, price, aditional_info) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [title, date_start, date_end, time_start, time_end, ubication, price || null, aditional_info]
+        [title, date_start, date_end || null, time_start, time_end || null, ubication, price || null, aditional_info || null]
       )
 
       if (!result || result.affectedRows <= 0) {
@@ -40,7 +54,7 @@ export class EventsModel {
         `UPDATE ${this.table} 
          SET title = ?, date_start = ?, date_end = ?, time_start = ?, time_end = ?, ubication = ?, price = ?, aditional_info = ?
          WHERE id = ?`,
-        [title, date_start, date_end, time_start, time_end, ubication, price || null, aditional_info, id]
+        [title, date_start, date_end || null, time_start, time_end || null, ubication, price || null, aditional_info || null, id]
       )
 
       if (!result || result.affectedRows <= 0) {

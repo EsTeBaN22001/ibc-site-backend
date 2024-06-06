@@ -3,7 +3,7 @@ password: "ibcSL1234.!"
 
 EVENTS STRUCTURE
 -id
--fecha (ngx-bootstrap range DatePicker)
+-fecha (Angular material rangeDatePicker)
   -fecha-inicio
   -fecha-fin
 -hora-inicio

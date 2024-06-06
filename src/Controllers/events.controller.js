@@ -14,6 +14,30 @@ export const getEventsController = async (req, res) => {
   res.send(events)
 }
 
+export const getEventController = async (req, res) => {
+  const eventId = req.params.id
+
+  if (!eventId) {
+    res.status(400)
+    return res.send({
+      success: false,
+      message: 'Error getting event'
+    })
+  }
+
+  const event = await EventsModel.getEvent(eventId)
+
+  if (!event || event.length === 0) {
+    res.status(400)
+    return res.send({
+      success: false,
+      message: 'Error getting event'
+    })
+  }
+
+  res.send(event)
+}
+
 export const createEventController = async (req, res) => {
   const event = req.body
 
@@ -21,7 +45,10 @@ export const createEventController = async (req, res) => {
 
   if (!result) {
     res.status(400)
-    res.send('Error creating event')
+    return res.send({
+      success: false,
+      message: 'Error creating event'
+    })
   }
 
   event.id = result.insertId
