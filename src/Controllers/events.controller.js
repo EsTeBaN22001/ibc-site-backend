@@ -64,7 +64,10 @@ export const updateEventController = async (req, res) => {
 
   if (!result || result.affectedRows <= 0) {
     res.status(400)
-    res.send('Error updating event')
+    return res.send({
+      success: false,
+      message: 'Error updating event'
+    })
   }
 
   res.send(event)
@@ -77,7 +80,10 @@ export const deleteEventController = async (req, res) => {
 
   if (!result || result.affectedRows <= 0) {
     res.status(400)
-    res.send('Error deleting event')
+    return res.send({
+      success: false,
+      message: 'Error deleting event'
+    })
   }
 
   res.send({ success: true, message: 'Event deleted successfully' })

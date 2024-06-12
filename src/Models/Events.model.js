@@ -31,11 +31,21 @@ export class EventsModel {
     }
   }
 
-  static async createEvent({ title, date_start, date_end, time_start, time_end, ubication, price, aditional_info }) {
+  static async createEvent({ title, date_start, date_end, time_start, time_end, ubication, price, aditional_info, image_url }) {
     try {
       const [result] = await pool.query(
-        `INSERT INTO ${this.table} (title, date_start, date_end, time_start, time_end, ubication, price, aditional_info) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [title, date_start, date_end || null, time_start, time_end || null, ubication, price || null, aditional_info || null]
+        `INSERT INTO ${this.table} (title, date_start, date_end, time_start, time_end, ubication, price, aditional_info, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          title,
+          date_start,
+          date_end || null,
+          time_start,
+          time_end || null,
+          ubication,
+          price || null,
+          aditional_info || null,
+          image_url || null
+        ]
       )
 
       if (!result || result.affectedRows <= 0) {
@@ -48,13 +58,35 @@ export class EventsModel {
     }
   }
 
-  static async updateEvent({ id, title, date_start, date_end, time_start, time_end, ubication, price, aditional_info }) {
+  static async updateEvent({
+    id,
+    title,
+    date_start,
+    date_end,
+    time_start,
+    time_end,
+    ubication,
+    price,
+    aditional_info,
+    image_url
+  }) {
     try {
       const [result] = await pool.query(
         `UPDATE ${this.table} 
-         SET title = ?, date_start = ?, date_end = ?, time_start = ?, time_end = ?, ubication = ?, price = ?, aditional_info = ?
+         SET title = ?, date_start = ?, date_end = ?, time_start = ?, time_end = ?, ubication = ?, price = ?, aditional_info = ?, image_url = ?
          WHERE id = ?`,
-        [title, date_start, date_end || null, time_start, time_end || null, ubication, price || null, aditional_info || null, id]
+        [
+          id,
+          title,
+          date_start,
+          date_end || null,
+          time_start,
+          time_end || null,
+          ubication,
+          price || null,
+          aditional_info || null,
+          image_url || null
+        ]
       )
 
       if (!result || result.affectedRows <= 0) {

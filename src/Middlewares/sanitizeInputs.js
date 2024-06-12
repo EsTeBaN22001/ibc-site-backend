@@ -11,7 +11,7 @@ export const sanitizeRegisterUser = [sanitizeField('name'), sanitizeField('usern
 
 export const sanitizeLoginUser = [sanitizeField('username'), sanitizeField('password')]
 
-export const sanitizeCreateEvent = [
+export const sanitizeEvent = [
   sanitizeField('title'),
   sanitizeField('date_start'),
   sanitizeField('date_end'),
@@ -19,16 +19,6 @@ export const sanitizeCreateEvent = [
   sanitizeField('time_end'),
   sanitizeField('ubication'),
   sanitizeField('price'),
-  sanitizeField('aditional_info')
-]
-
-export const sanitizeUpdateEvent = [
-  sanitizeField('title'),
-  sanitizeField('date_start'),
-  sanitizeField('date_end'),
-  sanitizeField('time_start'),
-  sanitizeField('time_end'),
-  sanitizeField('ubication'),
-  sanitizeField('price'),
-  sanitizeField('aditional_info')
+  sanitizeField('aditional_info'),
+  sanitizeField('image_url')
 ]
