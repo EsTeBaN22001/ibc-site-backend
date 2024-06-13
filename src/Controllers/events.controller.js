@@ -1,4 +1,9 @@
 import { EventsModel } from '../Models/Events.model.js'
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export const getEventsController = async (req, res) => {
   const events = await EventsModel.getEvents()
@@ -57,10 +62,37 @@ export const createEventController = async (req, res) => {
 }
 
 export const updateEventController = async (req, res) => {
-  const event = req.body
-  event.id = req.params.id
+  const idEvent = req.params.id
+  const updateEvent = req.body
+  updateEvent.id = idEvent
 
-  const result = await EventsModel.updateEvent(event)
+  // Obtener el evento antes de editar
+  const actualEvent = await EventsModel.getEvent(idEvent)
+
+  if (!actualEvent) {
+    res.status(400)
+    return res.send({
+      success: false,
+      message: 'Error updating event'
+    })
+  }
+
+  const actualEventImgName = actualEvent.image_url ? actualEvent.image_url.split('/')[2] : ''
+  const updateEventImgName = updateEvent.image_url ? updateEvent.image_url.split('/')[2] : ''
+
+  // Si hay una nueva imagen borrar la anterior
+  if (actualEventImgName != updateEventImgName && actualEventImgName !== '') {
+    const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(actualEvent.image_url))
+
+    // Borrar imagen anterior
+    fs.unlink(oldImagePath, err => {
+      if (err) {
+        res.status(400).send('error al borrar la imagen')
+      }
+    })
+  }
+
+  const result = await EventsModel.updateEvent(updateEvent)
 
   if (!result || result.affectedRows <= 0) {
     res.status(400)
@@ -70,7 +102,7 @@ export const updateEventController = async (req, res) => {
     })
   }
 
-  res.send(event)
+  res.status(200).send(result)
 }
 
 export const deleteEventController = async (req, res) => {

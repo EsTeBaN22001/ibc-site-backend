@@ -76,7 +76,6 @@ export class EventsModel {
          SET title = ?, date_start = ?, date_end = ?, time_start = ?, time_end = ?, ubication = ?, price = ?, aditional_info = ?, image_url = ?
          WHERE id = ?`,
         [
-          id,
           title,
           date_start,
           date_end || null,
@@ -85,7 +84,8 @@ export class EventsModel {
           ubication,
           price || null,
           aditional_info || null,
-          image_url || null
+          image_url || null,
+          id
         ]
       )
 
