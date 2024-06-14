@@ -107,6 +107,7 @@ export const updateEventController = async (req, res) => {
 
 export const deleteEventController = async (req, res) => {
   const eventId = req.params.id
+  const event = await EventsModel.getEvent(eventId)
 
   const result = await EventsModel.deleteEvent(eventId)
 
@@ -115,6 +116,17 @@ export const deleteEventController = async (req, res) => {
     return res.send({
       success: false,
       message: 'Error deleting event'
+    })
+  }
+
+  // Borrar imagen del evento de la carpeta de uploads
+  if (event.image_url) {
+    const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(event.image_url))
+
+    fs.unlink(oldImagePath, err => {
+      if (err) {
+        res.status(400).send('error al borrar la imagen')
+      }
     })
   }
 
