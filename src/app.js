@@ -7,9 +7,14 @@ import authRouter from './Routes/auth.routes.js'
 
 export const app = express()
 
+const corsOptions = {
+  origin: ['http://localhost:4200', 'https://ibcsl.netlify.app'],
+  methods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE']
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(morgan('dev'))
-app.use(cors())
 app.use('/uploads', express.static('uploads'))
 
 app.use('/api/events', eventsRouter)
