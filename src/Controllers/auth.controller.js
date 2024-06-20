@@ -1,5 +1,5 @@
 import { generateToken } from '../Middlewares/jwt.js'
-import { UserModel } from '../Models/user.model.js'
+import { UserModel } from '../Models/User.model.js'
 import bcrypt from 'bcrypt'
 
 export const registerController = async (req, res) => {
