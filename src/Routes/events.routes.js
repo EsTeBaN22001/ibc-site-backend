@@ -30,7 +30,7 @@ const router = Router()
 // Ruta para subir imágenes de eventos
 router.post('/upload', upload.single('image'), uploadEventImageController)
 
-router.get('/', verifyToken, getEventsController)
+router.get('/', getEventsController)
 router.get('/:id', verifyToken, getEventController)
 router.post('/create', verifyToken, sanitizeEvent, validateInputs, createEventController)
 router.post('/update/:id', verifyToken, sanitizeEvent, validateInputs, updateEventController)
