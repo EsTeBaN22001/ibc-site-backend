@@ -8,7 +8,7 @@ import authRouter from './Routes/auth.routes.js'
 export const app = express()
 
 const corsOptions = {
-  origin: ['http://localhost:4200', 'https://ibcsl.netlify.app'],
+  origin: ['http://localhost:4200', 'https://ibcsl.netlify.app', 'https://ibc-site-frontend-production.up.railway.app/'],
   methods: ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE']
 }
 
