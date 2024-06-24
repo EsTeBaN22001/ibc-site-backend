@@ -1,4 +1,4 @@
 node_modules
 .env
 structure.txt
-uploads
+uploads/*
