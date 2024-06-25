@@ -81,15 +81,20 @@ export const updateEventController = async (req, res) => {
   const updateEventImgName = updateEvent.image_url ? updateEvent.image_url.split('/')[2] : ''
 
   // Si hay una nueva imagen borrar la anterior
-  if (actualEventImgName != updateEventImgName && actualEventImgName !== '') {
+  if (actualEventImgName != updateEventImgName && actualEventImgName != '' && updateEventImgName != '') {
     const oldImagePath = path.join(__dirname, '..', '..', 'uploads', path.basename(actualEvent.image_url))
+    // res.send(oldImagePath)
 
-    // Borrar imagen anterior
-    fs.unlink(oldImagePath, err => {
-      if (err) {
-        res.status(400).send('error al borrar la imagen')
-      }
-    })
+    const imgExists = fs.existsSync(oldImagePath)
+
+    if (imgExists) {
+      // Borrar imagen anterior
+      fs.unlink(oldImagePath, err => {
+        if (err) {
+          return res.status(400).send('error al borrar la imagen')
+        }
+      })
+    }
   }
 
   const result = await EventsModel.updateEvent(updateEvent)

@@ -6,9 +6,9 @@ import {
   getEventsController,
   updateEventController
 } from '../Controllers/events.controller.js'
-import { uploadEventImageController } from '../Controllers/uploadEventImage.controller.js'
+import { deleteImageController, uploadEventImageController } from '../Controllers/image.controller.js'
 import { verifyToken } from '../Middlewares/jwt.js'
-import { sanitizeEvent } from '../Middlewares/sanitizeInputs.js'
+import { sanitizeDeleteImage, sanitizeEvent } from '../Middlewares/sanitizeInputs.js'
 import { validateInputs } from '../Middlewares/validateInput.js'
 import multer from 'multer'
 import path from 'path'
@@ -29,6 +29,7 @@ const router = Router()
 
 // Ruta para subir imágenes de eventos
 router.post('/upload', upload.single('image'), uploadEventImageController)
+router.post('/delete-image', verifyToken, sanitizeDeleteImage, validateInputs, deleteImageController)
 
 router.get('/', getEventsController)
 router.get('/:id', verifyToken, getEventController)

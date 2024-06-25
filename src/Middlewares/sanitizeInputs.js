@@ -22,3 +22,5 @@ export const sanitizeEvent = [
   sanitizeField('aditional_info'),
   sanitizeField('image_url')
 ]
+
+export const sanitizeDeleteImage = [sanitizeField('img')]
