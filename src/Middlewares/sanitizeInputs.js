@@ -20,7 +20,8 @@ export const sanitizeEvent = [
   sanitizeField('ubication'),
   sanitizeField('price'),
   sanitizeField('aditional_info'),
-  sanitizeField('image_url')
+  sanitizeField('image_url'),
+  sanitizeField('recurrent')
 ]
 
 export const sanitizeDeleteImage = [sanitizeField('img')]

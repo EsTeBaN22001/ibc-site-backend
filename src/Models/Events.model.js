@@ -19,7 +19,7 @@ export class EventsModel {
 
   static async getEvent(id) {
     try {
-      const [result, data] = await pool.query(`SELECT * FROM ${this.table} WHERE id = ${id}`)
+      const [result, queryData] = await pool.query(`SELECT * FROM ${this.table} WHERE id = ${id}`)
 
       if (!result) {
         return false
@@ -31,10 +31,22 @@ export class EventsModel {
     }
   }
 
-  static async createEvent({ title, date_start, date_end, time_start, time_end, ubication, price, aditional_info, image_url }) {
+  static async createEvent({
+    title,
+    date_start,
+    date_end,
+    time_start,
+    time_end,
+    ubication,
+    price,
+    aditional_info,
+    visible,
+    image_url,
+    recurrent
+  }) {
     try {
       const [result] = await pool.query(
-        `INSERT INTO ${this.table} (title, date_start, date_end, time_start, time_end, ubication, price, aditional_info, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO ${this.table} (title, date_start, date_end, time_start, time_end, ubication, price, aditional_info, visible, image_url, recurrent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           title,
           date_start,
@@ -44,7 +56,9 @@ export class EventsModel {
           ubication,
           price || null,
           aditional_info || null,
-          image_url || null
+          visible || null,
+          image_url || null,
+          recurrent || null
         ]
       )
 
@@ -68,12 +82,14 @@ export class EventsModel {
     ubication,
     price,
     aditional_info,
-    image_url
+    visible,
+    image_url,
+    recurrent
   }) {
     try {
       const [result] = await pool.query(
         `UPDATE ${this.table} 
-         SET title = ?, date_start = ?, date_end = ?, time_start = ?, time_end = ?, ubication = ?, price = ?, aditional_info = ?, image_url = ?
+         SET title = ?, date_start = ?, date_end = ?, time_start = ?, time_end = ?, ubication = ?, price = ?, aditional_info = ?, visible = ?, image_url = ?, recurrent = ?
          WHERE id = ?`,
         [
           title,
@@ -84,7 +100,9 @@ export class EventsModel {
           ubication,
           price || null,
           aditional_info || null,
+          visible || null,
           image_url || null,
+          recurrent || null,
           id
         ]
       )

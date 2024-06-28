@@ -97,7 +97,11 @@ export const updateEventController = async (req, res) => {
     }
   }
 
+  console.log(updateEvent)
+
   const result = await EventsModel.updateEvent(updateEvent)
+
+  console.log(result)
 
   if (!result || result.affectedRows <= 0) {
     res.status(400)
