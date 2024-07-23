@@ -25,3 +25,5 @@ export const sanitizeEvent = [
 ]
 
 export const sanitizeDeleteImage = [sanitizeField('img')]
+
+export const sanitizeMeetingSchedule = [sanitizeField('morning'), sanitizeField('afternoon')]

@@ -4,6 +4,7 @@ import cors from 'cors'
 
 import eventsRouter from './Routes/events.routes.js'
 import authRouter from './Routes/auth.routes.js'
+import meetingSchedule from './Routes/meeting-schedule.routes.js'
 
 export const app = express()
 
@@ -19,3 +20,4 @@ app.use('/uploads', express.static('uploads'))
 
 app.use('/api/events', eventsRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/meeting-schedule', meetingSchedule)
