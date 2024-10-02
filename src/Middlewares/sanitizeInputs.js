@@ -1,29 +1,43 @@
 import { body } from 'express-validator'
 import sanitizeHtml from 'sanitize-html'
 
-const sanitizeField = field => {
-  return body(field)
+const sanitizeField = (field, isRequired = false) => {
+  let validator = body(field)
     .trim()
-    .customSanitizer(value => (value !== undefined ? sanitizeHtml(value) : null))
+    .customSanitizer(value => {
+      // Convertir string vacío a null
+      if (value === '' || value === undefined) return null
+      return sanitizeHtml(value)
+    })
+
+  if (isRequired) {
+    validator = validator.isLength({ min: 1 }).withMessage(`${field} es obligatorio`)
+  }
+
+  return validator
 }
 
-export const sanitizeRegisterUser = [sanitizeField('name'), sanitizeField('username'), sanitizeField('password')]
+export const sanitizeRegisterUser = [
+  sanitizeField('name', true),
+  sanitizeField('username', true),
+  sanitizeField('password', true)
+]
 
-export const sanitizeLoginUser = [sanitizeField('username'), sanitizeField('password')]
+export const sanitizeLoginUser = [sanitizeField('username', true), sanitizeField('password', true)]
 
 export const sanitizeEvent = [
-  sanitizeField('title'),
-  sanitizeField('date_start'),
+  sanitizeField('title', true),
+  sanitizeField('date_start', true),
   sanitizeField('date_end'),
-  sanitizeField('time_start'),
+  sanitizeField('time_start', true),
   sanitizeField('time_end'),
-  sanitizeField('ubication'),
+  sanitizeField('ubication', true),
   sanitizeField('price'),
   sanitizeField('aditional_info'),
   sanitizeField('image_url'),
   sanitizeField('recurrent')
 ]
 
-export const sanitizeDeleteImage = [sanitizeField('img')]
+export const sanitizeDeleteImage = [sanitizeField('img', true)]
 
-export const sanitizeMeetingSchedule = [sanitizeField('morning'), sanitizeField('afternoon')]
+export const sanitizeMeetingSchedule = [sanitizeField('morning', true), sanitizeField('afternoon', true)]
