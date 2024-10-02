@@ -1,6 +1,6 @@
 import { generateToken } from '../Middlewares/jwt.js'
-import { UserModel } from '../Models/User.model.js'
 import bcrypt from 'bcrypt'
+import { User } from '../../models/init-models.js'
 
 export const registerController = async (req, res) => {
   const { name, username, password } = req.body
@@ -11,7 +11,21 @@ export const registerController = async (req, res) => {
     password: await bcrypt.hash(password, 5)
   }
 
-  const registerUser = await UserModel.registerUser(user)
+  let registerUser
+
+  try {
+    registerUser = await User.create(user)
+    if (!registerUser) {
+      throw new Error()
+    }
+  } catch (err) {
+    res.status(400)
+    return res.send({
+      success: false,
+      message: 'Hubo un error al registrar al usuario',
+      err
+    })
+  }
 
   if (!registerUser) {
     res.status(400)
@@ -28,7 +42,11 @@ export const registerController = async (req, res) => {
 export const loginController = async (req, res) => {
   const { username, password } = req.body
 
-  const userExists = await UserModel.userExistsByUsername(username)
+  const userExists = await User.findOne({
+    where: {
+      username
+    }
+  })
 
   if (!userExists) {
     res.status(404)
