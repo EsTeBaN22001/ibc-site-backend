@@ -12,6 +12,7 @@ const corsOptions = {
   origin: [
     'http://localhost:4200',
     'https://ibcsl.netlify.app',
+    'https://ibcsl.netlify.app/',
     'https://ibc-site-frontend-production.up.railway.app',
     'https://ibc-api-2od7.onrender.com'
   ],
