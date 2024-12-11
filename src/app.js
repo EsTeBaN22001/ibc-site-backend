@@ -10,6 +10,9 @@ export const app = express()
 
 const corsOptions = {
   origin: [
+    'capacitor://localhost',
+    'http://localhost',
+    'https://localhost',
     'http://localhost:4200',
     'https://ibcsl.netlify.app',
     'https://ibcsl.netlify.app/',
